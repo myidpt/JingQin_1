@@ -24,6 +24,8 @@ simple CH
         @display("i=device/pc2");
         bool sendInitialMessage = true;
         int numCM;
+        int numSensor;
+        int printStatusStep;
         string CH_task_input_filename;
         string CH_task_output_filename;
         string CM_status_input_filename;

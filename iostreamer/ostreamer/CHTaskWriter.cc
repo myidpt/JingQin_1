@@ -12,7 +12,15 @@ CHTaskWriter::CHTaskWriter(const string & filename) {
 }
 
 bool CHTaskWriter::writeTask(ITask * task) {
-    outputfile->writeLine("abciosu fsdklkj");
+    char buff[100];
+    sprintf(buff, "%d %.2lf %.2lf %.2lf %d",
+            task->getId(),
+            task->getArrivalTime(),
+            task->getFinishTime(),
+            task->getFinishTime() - task->getArrivalTime(),
+            task->getSensorId());
+    string line = buff;
+    outputfile->writeLine(line);
     return true;
 }
 

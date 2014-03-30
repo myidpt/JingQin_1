@@ -8,9 +8,13 @@
 #ifndef CHTASKWRITER_H_
 #define CHTASKWRITER_H_
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string>
 #include "Outputfile.h"
 #include "../../task/ITask.h"
+
+using namespace std;
 
 class CHTaskWriter {
 protected:

@@ -25,8 +25,8 @@ network jingqin
     types:
         channel Channel extends ned.DatarateChannel
         {
-            delay = 0.1 ms;
-            datarate = 100 Mbps;
+            delay = 0 ms;
+            datarate = 0 Mbps;
         }
     submodules:
         cm[numCM]: CM {

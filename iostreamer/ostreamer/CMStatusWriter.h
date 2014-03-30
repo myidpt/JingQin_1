@@ -10,7 +10,7 @@
 
 #include <string>
 #include "Outputfile.h"
-#include "status/Status.h"
+#include "status/SimpleStatus.h"
 
 using namespace std;
 
@@ -20,6 +20,7 @@ protected:
 public:
     CMStatusWriter(const string & filename);
     bool writeStatus(string & statusstr);
+    bool writeStatus(IStatus * status[], int num);
     virtual ~CMStatusWriter();
 };
 

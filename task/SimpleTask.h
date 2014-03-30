@@ -12,6 +12,8 @@
 #include <iostream>
 #include <string>
 #include "ITask.h"
+#include "SimpleSubTask.h"
+#include "status/IStatus.h"
 
 using namespace std;
 
@@ -19,19 +21,24 @@ class SimpleTask : public ITask {
 protected:
     int Id;
     double arrivalTime;
+    double finishTime;
     int totalSubTasks;
-    int sensorID;
+    int sensorId;
     double inputData;
     double outputData;
     double computeCost;
     double maxDelay;
+    int undispatchedSubTasks;
+    int unfinishedSubTasks;
+    int subId;
+    int paradegree; // target concurrency
+    int concurrency; // current concurrency
+    list<ITask * > * subTasks;
 
+    SimpleTask();
 public:
     enum Parameter {
-        ID, // From input. Read only.
-        ARRIVAL_TIME, // From input.
         TOTAL_SUBTASKS, // From input.
-        SENSOR_ID, // From input.
         INPUT_DATA, // From input.
         OUTPUT_DATA, // From input.
         COMPUTE_COST, // From input.
@@ -39,16 +46,46 @@ public:
 
         TOTAL_RUNTIME,
         NODES_USED,
-        SUCCESS_RATE
+        SUCCESS_RATE,
+
+        CONCURRENCY,
+        PARADEGREE,
+        DEGREEFUL,
+
+        SUBTASK_COST
     };
-    SimpleTask();
+    cObject * dup();
+    int getId();
+    int getSensorId();
+    double getArrivalTime();
+    double getFinishTime();
+    ITask * createSubTask(int num, IStatus * server);
+    ITask * getFatherTask();
+    ITask::TaskType getTaskType();
+    double getInputData();
+    double getOutputData();
+    double getComputeCost();
+    double getRemainingCost();
+    double getServingWorkload();
+    double getRemainingTimeBeforeDeadline();
+    double getMaxDelay();
+    int getServerId();
+    void setServerId(int id);
+    int getDegree();
+    int getUnfinishedSubTasks();
+    int getUndispatchedSubTasks();
+    int getSubTaskCost();
+    int getConcurrency();
+
     bool setParameter(int param, double value);
     double getParameter(int param);
-    bool setFinishedSubTask(int id);
-    bool setUnfinishedSubTask(int id);
-    bool parseInputfile(string & line);
+    bool setFinishedSubTask(ITask * task);
+    bool parseTaskString(string & line);
+    bool dispatched();
+    bool finished();
     void printInformation();
     virtual ~SimpleTask();
+    friend class TaskFactory;
 };
 
 #endif /* SIMPLETASK_H_ */
